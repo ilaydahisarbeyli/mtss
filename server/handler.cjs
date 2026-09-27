@@ -405,8 +405,17 @@ async function handler(req, res) {
       if (classId && !allowedClasses.some(item => item.id === classId)) fail(403, 'Bu sınıf için Excel yetkiniz yok.');
       const kind = url.searchParams.get('kind') || '';
       if (kind && !['observation', 'rubric'].includes(kind)) fail(400, 'Form türünü kontrol edin.');
+      const studentId = url.searchParams.get('studentId') || '';
+      if (studentId) {
+        const targetStudent = await student(db, studentId, s);
+        const targetClass = classes.find(item => item.id === targetStudent.classId);
+        if (targetClass?.schoolId !== school.id || (classId && targetStudent.classId !== classId)) fail(400, 'Öğrenci seçimini kontrol edin.');
+      }
+      const startDate = url.searchParams.get('startDate') ? date(url.searchParams.get('startDate')) : '';
+      const endDate = url.searchParams.get('endDate') ? date(url.searchParams.get('endDate')) : '';
+      if (startDate && endDate && startDate > endDate) fail(400, 'Başlangıç tarihi bitiş tarihinden sonra olamaz.');
       const query = (url.searchParams.get('q') || '').toLocaleLowerCase('tr');
-      const rows = (await records(db, allowedClasses)).filter(r => (!kind || r.kind === kind) && (!classId || r.classId === classId) && (!url.searchParams.get('teacher') || r.teacher === url.searchParams.get('teacher')) && (!query || `${r.student} ${r.displayNote} ${r.type}`.toLocaleLowerCase('tr').includes(query)));
+      const rows = (await records(db, allowedClasses)).filter(r => (!kind || r.kind === kind) && (!classId || r.classId === classId) && (!studentId || r.studentId === studentId) && (!url.searchParams.get('teacher') || r.teacher === url.searchParams.get('teacher')) && (!startDate || r.date >= startDate) && (!endDate || r.date <= endDate) && (!query || `${r.student} ${r.displayNote} ${r.type}`.toLocaleLowerCase('tr').includes(query)));
       let sheet, filename;
       if (kind === 'rubric') {
         const answers = rows.map(r => {
