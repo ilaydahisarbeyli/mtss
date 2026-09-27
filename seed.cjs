@@ -42,7 +42,21 @@ const definitions = [
 ];
 
 const legacyNazmiIds = { 'Anaokulu 3 Yaş': 'ana3', 'Anaokulu 4 Yaş': 'ana4', 'Anaokulu 5 Yaş A': 'ana5', '1-A': '1a', '1-B': '1b' };
-const historicalStudentClasses = { 'atagen\0NİL AĞAN': 'Anaokulu 5 Yaş' };
+const historicalStudentClasses = {
+  'atagen\0NİL AĞAN': 'Anaokulu 5 Yaş',
+  'atagen\0ASLI DİNDAR': '4-A',
+  'atagen\0BERAT ERAY ÇAĞLAV': '4-A',
+  'atagen\0ELİF AYSEL OR': '4-A',
+  'atagen\0EYLÜL DENİZ KAYABAŞ': '4-A',
+  'atagen\0MİLA NAZ AVCI': '4-A',
+  'atagen\0ŞEVVAL KAR': '4-A',
+  'atagen\0YAĞIZ ASAF KARAKUŞ': '4-A',
+  'atagen\0ASLAN ALİ SOYLU': '4-B',
+  'atagen\0MELİSA ALKAN': '4-B',
+  'atagen\0RABİA CUM': '4-B',
+  'atagen\0ZELİŞ GÖKÇE CANDAN': '4-B',
+  'atagen\0ALİ HAKKI': '4-B'
+};
 const slug = name => name.toLocaleLowerCase('tr').replaceAll('ı', 'i').replaceAll('ş', 's').replaceAll('ğ', 'g').replaceAll('ü', 'u').replaceAll('ö', 'o').replaceAll('ç', 'c').replace(/[^a-z0-9]+/g, '');
 
 const classes = definitions.map(item => {

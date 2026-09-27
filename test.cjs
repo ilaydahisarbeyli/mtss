@@ -29,7 +29,7 @@ for (const entry of ['server/local.cjs', 'tests/vercel-host.mjs']) test(entry + 
     const d=(await request('/api/data?schoolId=nazmi','GET',null,guest)).data;
     const atagen=(await request('/api/data?schoolId=atagen','GET',null,guest)).data;
     assert.equal(d.school.id,'nazmi');assert.equal(d.classes.length,13);assert.equal(d.students.length,217);
-    assert.equal(atagen.school.id,'atagen');assert.equal(atagen.classes.length,8);assert.equal(atagen.students.length,94);
+    assert.equal(atagen.school.id,'atagen');assert.equal(atagen.classes.length,8);assert.equal(atagen.students.length,96);
     assert.equal(d.teachers.length,35);assert.ok(d.teachers.includes('Esra Derebaşı'));assert.ok(d.teachers.includes('Beyza Es'));assert.ok(d.teachers.includes('Özgür Emil'));assert.ok(d.teachers.includes('Eda Aktaş'));assert.ok(!d.teachers.includes('Ayşe Kaya'));
     assert.equal(atagen.teachers.length,25);assert.ok(atagen.teachers.includes('Mehtap Duyan'));assert.ok(atagen.teachers.includes('Beyza Es'));assert.ok(atagen.teachers.includes('Özgür Emil'));assert.ok(!atagen.teachers.includes('Esra Derebaşı'));
     assert.deepEqual(Object.fromEntries(d.classes.map(item=>[item.name,item.teacher])),{'Anaokulu 3 Yaş':'Sıla Konukçu','Anaokulu 4 Yaş':'Elif Gaye Dingil','Anaokulu 5 Yaş A':'Esra Derebaşı','Anaokulu 5 Yaş B':'Sema Kesik','1-A':'Mehmet Baytekin','1-B':'Berkay Meç','2-A':'Hüsniye Berk','2-B':'Beste Günçiçek','3-A':'Doğuş Aydın','3-B':'Dilek Güngör','3-C':'İlker Bayraktar','4-A':'Çiğdem Uzunçakmak','4-B':'Fadime Karataş'});
@@ -41,7 +41,7 @@ for (const entry of ['server/local.cjs', 'tests/vercel-host.mjs']) test(entry + 
     assert.equal((await request('/api/export?schoolId=atagen','GET',null,kubra)).status,403);
     const expectedClassCounts={'Anaokulu 3 Yaş':11,'Anaokulu 4 Yaş':11,'Anaokulu 5 Yaş A':11,'Anaokulu 5 Yaş B':12,'1-A':17,'1-B':16,'2-A':20,'2-B':18,'3-A':21,'3-B':20,'3-C':20,'4-A':20,'4-B':20};
     for(const c of d.classes)assert.equal(d.students.filter(s=>s.classId===c.id).length,expectedClassCounts[c.name]);
-    const expectedAtagenClassCounts={'Anaokulu 3 Yaş':6,'Anaokulu 4 Yaş':11,'Anaokulu 5 Yaş':11,'1-A':13,'2-A':12,'3-A':11,'4-A':15,'4-B':15};
+    const expectedAtagenClassCounts={'Anaokulu 3 Yaş':6,'Anaokulu 4 Yaş':11,'Anaokulu 5 Yaş':11,'1-A':13,'2-A':12,'3-A':11,'4-A':13,'4-B':19};
     for(const c of atagen.classes)assert.equal(atagen.students.filter(s=>s.classId===c.id).length,expectedAtagenClassCounts[c.name]);
     assert.ok(d.students.some(student=>student.name==='ALİ BARAN EKMEN'&&student.classId==='nazmi-1a'));
     assert.ok(d.students.some(student=>student.name==='LİYA YILMAZ'&&student.classId==='nazmi-1a'));
@@ -58,7 +58,8 @@ for (const entry of ['server/local.cjs', 'tests/vercel-host.mjs']) test(entry + 
     assert.ok(atagen.students.some(student=>student.name==='NİL AĞAN'&&student.classId==='atagen-anaokulu4yas'));
     assert.ok(atagen.students.some(student=>student.name==='OĞUZHAN KONCA'&&student.classId==='atagen-anaokulu5yas'));
     assert.ok(atagen.students.some(student=>student.name==='ZEYNEP ERÇEVİK'&&student.classId==='atagen-4a'));
-    assert.ok(atagen.students.some(student=>student.name==='ALİ HAKKI'&&student.classId==='atagen-4b'));
+    for(const name of ['MELİSA ALKAN','RABİA CUM','ASLAN ALİ SOYLU','ALİ HAKKI'])assert.ok(atagen.students.some(student=>student.name===name&&student.classId==='atagen-4a'));
+    for(const name of ['ASLI DİNDAR','ŞEVVAL KAR','YAĞIZ ASAF KARAKUŞ','DESMOND EMMANUEL EMBAYE','YAKUP ÇINAR EKŞİ'])assert.ok(atagen.students.some(student=>student.name===name&&student.classId==='atagen-4b'));
     assert.ok(atagen.students.every(student=>student.birthDate===''&&student.gender==='Belirtilmedi'&&student.parentName===''&&student.phone===''));
     assert.equal(d.students.some(s=>atagen.students.some(a=>a.id===s.id)),false);
     assert.equal('meetings' in d,false);assert.deepEqual(d.records,[]);assert.equal(d.rubricCriteria.length,21);assert.equal(d.rubricScale.length,5);

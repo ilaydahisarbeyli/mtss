@@ -76,38 +76,40 @@ const atagenRoster = {
     'EBRAR MİNA AKGÜL'
   ],
   '4-A': [
-    'ALYA DİRİCE',
-    'ASLI DİNDAR',
-    'BERAT ERAY ÇAĞLAV',
     'DEFNE TÜNAY',
+    'ÖZGÜR ŞEN',
     'DENİZ MECİT',
     'EFE GÜNAY',
-    'ELİF AYSEL OR',
-    'EYLÜL DENİZ KAYABAŞ',
     'HALİS DEMİR KILIÇ',
     'HAYAT KAYA',
-    'MİLA NAZ AVCI',
-    'ÖZGÜR ŞEN',
-    'ŞEVVAL KAR',
-    'YAĞIZ ASAF KARAKUŞ',
-    'ZEYNEP ERÇEVİK'
+    'MELİSA ALKAN',
+    'RABİA CUM',
+    'ZEYNEP ERÇEVİK',
+    'ZELİŞ GÖKÇE CANDAN',
+    'ALYA DİRİCE',
+    'ASLAN ALİ SOYLU',
+    'ALİ HAKKI'
   ],
   '4-B': [
-    'ASLAN ALİ SOYLU',
+    'ŞEVVAL KAR',
+    'MİLA NAZ AVCI',
+    'NEHİR BERRAK ŞENTÜRK',
+    'ASLI DİNDAR',
     'AZRA TANEM AKTAŞ',
     'DEFNE AKER',
     'DENİZ BEYAZ',
     'DERİN ELİF SÜLÜN',
     'EGEMEN AYDEMİR',
-    'ERTUĞRUL TAHAR SALTIK',
+    'ELİF AYSEL OR',
+    'EYLÜL DENİZ KAYABAŞ',
     'FURKAN URAS ERTÜRK',
     'HAMZA TOPRAK KOCAMAN',
-    'MELİSA ALKAN',
-    'NEHİR BERRAK ŞENTÜRK',
-    'RABİA CUM',
     'URAZ KUTAY RAMAZAN',
-    'ZELİŞ GÖKÇE CANDAN',
-    'ALİ HAKKI'
+    'YAĞIZ ASAF KARAKUŞ',
+    'ERTUĞRUL TAHAR SALTIK',
+    'DESMOND EMMANUEL EMBAYE',
+    'BERAT ERAY ÇAĞLAV',
+    'YAKUP ÇINAR EKŞİ'
   ]
 };
 

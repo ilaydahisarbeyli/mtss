@@ -62,6 +62,11 @@ test('Old demo students and their records are replaced by the real rosters', asy
     const nil = await db.get('SELECT id FROM students WHERE name=?', 'NİL AĞAN');
     await db.run('UPDATE students SET classId=? WHERE id=?', 'atagen-anaokulu5yas', nil.id);
     await db.run('INSERT INTO records VALUES(?,?,?,?,?,?,?,?,?)', 'nil-existing-record', nil.id, 'observation', 'İlayda Hisarbeyli', '', '2026-09-02', 'Genel Gözlem', 'korunacak kayıt', new Date().toISOString());
+    const asli = await db.get('SELECT id FROM students WHERE name=?', 'ASLI DİNDAR');
+    await db.run('UPDATE students SET classId=? WHERE id=?', 'atagen-4a', asli.id);
+    await db.run('INSERT INTO records VALUES(?,?,?,?,?,?,?,?,?)', 'asli-existing-record', asli.id, 'observation', 'İlayda Hisarbeyli', '', '2026-09-03', 'Genel Gözlem', 'korunacak şube kaydı', new Date().toISOString());
+    const aslan = await db.get('SELECT id FROM students WHERE name=?', 'ASLAN ALİ SOYLU');
+    await db.run('UPDATE students SET classId=? WHERE id=?', 'atagen-4b', aslan.id);
     await initialize(db, { DATA_DIR: folder });
     assert.equal(await db.get('SELECT id FROM students WHERE id=?', 'ana5-0'), undefined);
     assert.equal(await db.get('SELECT id FROM records WHERE id=?', 'demo-record'), undefined);
@@ -72,7 +77,12 @@ test('Old demo students and their records are replaced by the real rosters', asy
     const movedNil = await db.get('SELECT id,classId FROM students WHERE id=?', nil.id);
     assert.equal(movedNil.id, nil.id); assert.equal(movedNil.classId, 'atagen-anaokulu4yas');
     assert.equal((await db.get('SELECT COUNT(*) AS count FROM records WHERE id=? AND studentId=?', 'nil-existing-record', nil.id)).count, 1);
-    assert.equal((await db.get('SELECT COUNT(*) AS count FROM students')).count, 311);
+    const movedAsli = await db.get('SELECT id,classId FROM students WHERE id=?', asli.id);
+    assert.equal(movedAsli.id, asli.id); assert.equal(movedAsli.classId, 'atagen-4b');
+    assert.equal((await db.get('SELECT COUNT(*) AS count FROM records WHERE id=? AND studentId=?', 'asli-existing-record', asli.id)).count, 1);
+    const movedAslan = await db.get('SELECT id,classId FROM students WHERE id=?', aslan.id);
+    assert.equal(movedAslan.id, aslan.id); assert.equal(movedAslan.classId, 'atagen-4a');
+    assert.equal((await db.get('SELECT COUNT(*) AS count FROM students')).count, 313);
     assert.equal((await db.get('SELECT COUNT(*) AS count FROM students WHERE classId=?', 'nazmi-anaokulu5yasa')).count, 11);
     assert.equal((await db.get('SELECT COUNT(*) AS count FROM students WHERE classId LIKE ? AND birthDate<>?', 'nazmi-%', '')).count, 0);
     assert.equal((await db.get('SELECT COUNT(*) AS count FROM students WHERE classId LIKE ? AND birthDate<>?', 'atagen-%', '')).count, 0);
